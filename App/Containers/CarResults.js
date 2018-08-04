@@ -48,9 +48,9 @@ class CarResults extends React.Component {
   {
     // Get model
     var models = this.props.model.replace(' ', '+');
-    get_cars({"--make_model": this.props.make.toLowerCase() + "+" + models.toLowerCase(), "--city": location}).then((data) => {
+    get_cars({make: this.props.make.toLowerCase(), model: models.toLowerCase(), city: location}).then((data) => {
       console.log(data);
-      this.setState({"cars": JSON.parse(data.Payload)})
+      this.setState(data);
     }).catch((error) => {
       console.log(error);
     });
@@ -119,7 +119,7 @@ class CarResults extends React.Component {
             <Title style={{paddingLeft:10, paddingTop:10, paddingRight:10}}>
               {rowData.desc} ${rowData.price}
             </Title>
-            {this.renderPercentage(rowData.percent_above_kbb)}
+            {this.renderPercentage(rowData.percentAboveKbb)}
           </ViewUI>
           <ImageUI
             styleName="large-wide"
@@ -138,10 +138,10 @@ class CarResults extends React.Component {
                 <TimeAgo time={rowData.timeago} />
               </ViewUI>
               <ViewUI styleName="horizontal h-center" style={{paddingBottom: 10}}>
-                <Button styleName="dark" onPress={this.listing_press.bind(this, rowData.url)}>
+                <Button styleName="dark" onPress={this.listing_press.bind(this, rowData.craigsLink)}>
                   <TextUI>Go To Listing</TextUI>
                 </Button>
-                <Button styleName="dark" onPress={this.listing_press.bind(this, rowData.kbb_url)}>
+                <Button styleName="dark" onPress={this.listing_press.bind(this, rowData.kbbLink)}>
                   <TextUI>Go To Kbb</TextUI>
                 </Button>
               </ViewUI>
